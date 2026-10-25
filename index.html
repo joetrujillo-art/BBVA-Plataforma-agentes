@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plataforma de construcción y orquestación de agentes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="login-ov">
+  <div class="login-card">
+    <div class="login-mark"><svg class="ic s24" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></div>
+    <h1>Plataforma de construcción y orquestación de agentes</h1>
+    <p class="t-muted">BBVA · Prescription Business</p>
+    <div class="field"><label for="login-persona">Entrar como <span class="demo-flag">Modo demostración</span></label>
+      <select class="inp" id="login-persona"></select>
+      <div class="hint">Cada persona tiene un rol y un ámbito (países y dominios) distintos.</div></div>
+    <button class="btn btn-p" style="width:100%" data-act="login">Entrar con SSO corporativo</button>
+    <div class="t-sm t-muted" style="margin-top:16px;display:flex;gap:6px;align-items:center"><svg class="ic s14" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Acceso mediante el IAM de BBVA · RBAC por rol, país y dominio</div>
+  </div>
+</div>
+<header id="topbar">
+  <div class="tb-row1">
+  <button class="tb-ctrl" id="tb-menu-btn" data-act="menu" aria-label="Abrir menú"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  <a id="tb-brand" href="#/home" aria-label="Inicio">
+    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iOTYwLjAwMDAwMHB0IiBoZWlnaHQ9IjI4OC4wMDAwMDBwdCIgdmlld0JveD0iMCAwIDk2MC4wMDAwMDAgMjg4LjAwMDAwMCIKIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiPgoKPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsMjg4LjAwMDAwMCkgc2NhbGUoMC4xMDAwMDAsLTAuMTAwMDAwKSIKZmlsbD0iI0Y3RjhGOCIgc3Ryb2tlPSJub25lIj4KPHBhdGggZD0iTTgyMTcgMjg2OCBjLTkgLTcgLTMwOSAtNTYzIC02NjcgLTEyMzYgLTU1MyAtMTAzOCAtNjQ5IC0xMjI1IC02NDAKLTEyNDIgMTAgLTE5IDIxIC0yMCAyMjkgLTIwIDE4NiAwIDIyMSAyIDIzMiAxNiA4IDggMjAxIDM3NCA0MjkgODEyIDQwNSA3NzkKNDE2IDc5NyA0NDYgODAwIDE3IDIgMzUgLTMgNDEgLTEwIDYgLTcgMTk0IC0zNjYgNDE4IC03OTggMjI0IC00MzIgNDE0IC03OTMKNDIzIC04MDMgMTMgLTE1IDM4IC0xNyAyMzMgLTE3IDIxMSAwIDIxOSAxIDIyOSAyMSAxMCAxOCAtNzQgMTgxIC02NDEgMTI0NwotMzU4IDY3NSAtNjU3IDEyMzAgLTY2MyAxMjM0IC0xNyAxMiAtNTAgOSAtNjkgLTR6Ii8+CjxwYXRoIGQ9Ik0xNiAyNTA1IGMtMTUgLTE1IC0xNiAtMTI1IC0xNiAtMTIzNiAwIC04MjIgMyAtMTIyNyAxMCAtMTI0MCAxMAotMTggMjggLTE5IDY1NiAtMTkgMzc4IDAgNjg1IDQgNzQyIDEwIDE0MiAxNiAyNTUgNDYgMzYyIDk3IDc4IDM4IDEwOSA1OSAxNzAKMTIyIDEyNSAxMjYgMTc3IDI1MyAxODcgNDYzIDcgMTQxIC03IDI0MiAtNTAgMzUzIC0yNiA2OSAtNDAgOTAgLTEwNiAxNTYgLTU3CjU3IC05NCA4NSAtMTQ4IDExMCAtNDAgMTkgLTczIDM2IC03MyAzOSAxIDMgMTkgMTYgNDEgMzAgOTMgNTYgMTg0IDE5NCAyMTQKMzIyIDM0IDE0MyAxMSAzMjcgLTU2IDQ1OSAtNzIgMTQzIC0yNDUgMjcyIC00MzAgMzIxIC04MiAyMSAtOTkgMjIgLTc4NSAyNQotNjM3IDQgLTcwMyAyIC03MTggLTEyeiBtMTM4NCAtMzc1IGM4NiAtMzEgMTU4IC0xMDIgMTgzIC0xNzkgMjEgLTY2IDIyIC0xNzEKMiAtMjM4IC0xOCAtNTkgLTgxIC0xMzUgLTEzNiAtMTYzIC04OCAtNDUgLTEzOSAtNTAgLTU4NiAtNTAgLTQwNyAwIC00MjMgMQotNDMzIDE5IC02IDEyIC0xMCAxMzAgLTEwIDMxNSAwIDI1OSAyIDI5NyAxNiAzMTEgMTUgMTUgNjEgMTYgNDU4IDEzIDQzNSAtNAo0NDIgLTQgNTA2IC0yOHogbS00IC0xMDA1IGMxMjAgLTIxIDE5NCAtNTYgMjUwIC0xMTggNTcgLTYzIDc4IC0xMzEgNzggLTI1MgowIC0yMzAgLTk4IC0zMzYgLTM0MiAtMzc0IC0xMDMgLTE2IC05NDQgLTE1IC05NjAgMSAtOSA5IC0xMiAxMDYgLTEyIDM3NSAwCjMzNCAxIDM2MyAxOCAzNzIgMTEgNyAxNzQgMTEgNDQ4IDExIDM0NSAwIDQ0OSAtMyA1MjAgLTE1eiIvPgo8cGF0aCBkPSJNMjU1NiAyNTA1IGMtMTUgLTE1IC0xNiAtMTIzIC0xNiAtMTI0MCAwIC0xMDk5IDIgLTEyMjUgMTYgLTEyMzkgMTQKLTE0IDg3IC0xNiA2NTQgLTE2IDM5OSAwIDY3OCA0IDc0MiAxMSAzMzUgMzYgNTQ0IDE1OSA2NDcgMzc5IDU1IDExOCA2NiAxNzgKNjYgMzU1IC0xIDE4MyAtMTMgMjM0IC04NyAzNjAgLTU0IDkwIC0xMTggMTUxIC0yMTIgMjAwIC00MiAyMiAtNzYgNDMgLTc2IDQ3CjAgNCAxMCAxMCAyMSAxMyAxMiA0IDUyIDM3IDg5IDc0IDczIDczIDExOSAxNTUgMTQ1IDI1NiAxNyA2NiAyMCAyMTcgNiAyOTEKLTQ1IDIzOCAtMjMwIDQyMSAtNDk5IDQ5NyAtNzUgMjEgLTk2IDIxIC03NzggMjUgLTYzNyAzIC03MDMgMiAtNzE4IC0xM3oKbTEzMjggLTM2MCBjMTI0IC0yNiAyMTIgLTEwMCAyNDMgLTIwNCAyMCAtNzIgMTQgLTE5OSAtMTQgLTI2MSAtMzggLTg3IC0xMjYKLTE0OCAtMjQzIC0xNzAgLTc5IC0xNSAtODkzIC0xMyAtOTA4IDIgLTE3IDE3IC0xNyA2MTkgMCA2MzYgMTkgMTkgODMwIDE2CjkyMiAtM3ogbTEyNiAtMTAzNCBjMTIzIC0zNyAxOTQgLTk1IDIzMiAtMTkxIDMxIC04MSAzMSAtMjUxIC0yIC0zMzQgLTQzCi0xMTIgLTEzMiAtMTcxIC0zMDAgLTIwMiAtMTAyIC0xOCAtOTYwIC0yMCAtOTc4IC0yIC0xOCAxOCAtMTcgNzI5IDEgNzQ3IDkKMTAgMTE1IDExIDQ5MiA4IDQ2MyAtMyA0ODMgLTQgNTU1IC0yNnoiLz4KPHBhdGggZD0iTTQ3MTAgMjUxMCBjLTE5IC0xMiAtNzUgOTcgNjY4IC0xMzAwIDY3MyAtMTI2NSA2NTUgLTEyMzMgNzAxIC0xMTg1CjEwIDExIDMxMCA1NjkgNjY2IDEyMzkgNTAzIDk0OCA2NDYgMTIyMyA2MzggMTIzNSAtOSAxNCAtNDIgMTYgLTIyNiAxOSAtMjE1CjIgLTIxNiAyIC0yMzEgLTIwIC04IC0xMyAtMTk5IC0zNzIgLTQyNCAtNzk4IC00MjAgLTc5NCAtNDM3IC04MjEgLTQ3OCAtNzk1Ci04IDYgLTIwMyAzNjQgLTQzMiA3OTYgLTIyOSA0MzMgLTQyMyA3OTQgLTQzMSA4MDMgLTEyIDE0IC00MiAxNiAtMjI2IDE2Ci0xMTYgMCAtMjE4IC01IC0yMjYgLTEweiIvPgo8L2c+Cjwvc3ZnPgo=" alt="BBVA">
+    <span class="div"></span>
+    <span class="name-wrap"><span class="name">Plataforma de construcción y orquestación de agentes</span><span class="sub">Prescription Business</span></span>
+  </a>
+  <div class="tb-spacer"></div>
+  <label class="tb-ctrl" id="tb-search" title="Buscar un trace_id en el Traceability Center"><svg class="ic s16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="tb-trace" placeholder="Buscar trace_id…" data-enter="traceSearch" autocomplete="off" aria-label="Buscar por trace_id"></label>
+  <div id="tb-country"></div>
+  <div id="tb-notif"></div>
+  <div id="tb-user"></div>
+  </div>
+  <div class="tb-row2"><nav id="nav" aria-label="Navegación principal"></nav></div>
+</header>
+<main id="main"><div id="view" aria-live="polite"></div></main>
+<div id="modal-root"></div>
+<div id="toasts" aria-live="polite"></div>
+<script src="js/data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/v-home.js"></script>
+<script src="js/v-observ.js"></script>
+<script src="js/v-agents.js"></script>
+<script src="js/v-onb.js"></script>
+<script src="js/v-studio.js"></script>
+<script src="js/v-gov.js"></script>
+<script src="js/v-orq.js"></script>
+<script src="js/v-admin.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
