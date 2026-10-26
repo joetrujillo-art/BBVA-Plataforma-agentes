@@ -461,7 +461,7 @@ table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;li
 .example{display:grid;grid-template-columns:1fr auto 1fr auto;gap:var(--s3);align-items:center;padding:var(--s3);border:1px solid var(--border);border-radius:var(--r8);margin-bottom:var(--s2)}
 .example.never{border-color:#F0C2C9;background:#FFF8F9}
 .diff-add{color:var(--green-tx)}.diff-del{color:var(--red-tx);text-decoration:line-through}
-.choose-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--s4)}
+.choose-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4)}
 .choose{border:1px solid var(--border);border-radius:var(--r16);padding:var(--s5);background:var(--w);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:var(--s2);min-height:150px}
 .choose:hover{box-shadow:var(--sh-hover);border-color:#C9D2E3}
 .choose .h-card{font-size:15px}
@@ -513,6 +513,39 @@ table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;li
   .gantt-row{grid-template-columns:110px 1fr 56px}
   .example{grid-template-columns:1fr}
 }
+/* ── Rejillas equilibradas de KPIs y filtros ────────────────────────────────
+   Las columnas se calculan según el nº de elementos (con :has) para que ninguna
+   fila quede con un único elemento descolgado. */
+@media (min-width:1200px){
+  :is(.kpis,.filters):has(>:nth-child(1):last-child){grid-template-columns:minmax(0,1fr)}
+  :is(.kpis,.filters):has(>:nth-child(2):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
+  :is(.kpis,.filters):has(>:nth-child(3):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}
+  :is(.kpis,.filters):has(>:nth-child(4):last-child){grid-template-columns:repeat(4,minmax(0,1fr))}
+  :is(.kpis,.filters):has(>:nth-child(5):last-child){grid-template-columns:repeat(5,minmax(0,1fr))}
+  :is(.kpis,.filters):has(>:nth-child(6):last-child){grid-template-columns:repeat(6,minmax(0,1fr))}
+  :is(.kpis,.filters):has(>:nth-child(7):last-child){grid-template-columns:repeat(7,minmax(0,1fr))}
+  .filters:has(>:nth-child(8):last-child){grid-template-columns:repeat(8,minmax(0,1fr))}
+  .kpis:has(>:nth-child(8):last-child){grid-template-columns:repeat(4,minmax(0,1fr))}
+  :is(.kpis,.filters):has(>:nth-child(9):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (min-width:700px) and (max-width:1199px){
+  :is(.kpis,.filters){grid-template-columns:repeat(12,minmax(0,1fr))}
+  :is(.kpis,.filters) > *{grid-column:span 4}
+  :is(.kpis,.filters):has(>:nth-child(2):last-child) > *,
+  :is(.kpis,.filters):has(>:nth-child(4):last-child) > *{grid-column:span 6}
+  :is(.kpis,.filters):has(>:nth-child(5):last-child) > :nth-child(n+4){grid-column:span 6}
+  :is(.kpis,.filters):has(>:nth-child(7):last-child) > :nth-child(-n+4){grid-column:span 3}
+  :is(.kpis,.filters):has(>:nth-child(8):last-child) > *{grid-column:span 3}
+}
+@media (max-width:699px){
+  :is(.kpis,.filters){grid-template-columns:repeat(2,minmax(0,1fr))}
+  :is(.kpis,.filters) > :last-child:nth-child(odd){grid-column:1/-1}
+  .choose-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:480px){
+  .choose-grid{grid-template-columns:minmax(0,1fr)}
+}
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 </style>
@@ -1945,11 +1978,11 @@ reg('catalogo', {t:'Catálogo de agentes', s:'Inventario único del ecosistema: 
   }).join('');
   return pageHead('catalogo', {actions:`<button class="btn btn-s" ${da('catReport')}>${ic('file')}Reporte ejecutivo</button><button class="btn btn-s" ${da('catExport')}>${ic('download')}Exportar CSV</button>`}) +
     `<div class="card mb24"><div class="row mb16"><div class="search-inp grow" style="min-width:260px">${ic('search','s16')}<input class="inp" id="cat-q" placeholder="Buscar por nombre, ID, skill, dominio, proveedor, Agent Card o tag…" value="${esc(f.q || '')}" data-input="catQ" aria-label="Búsqueda libre"></div>
-      <select class="inp" style="width:230px" data-change="catLoadView" aria-label="Vistas guardadas">${optList(views.map(v => v.name), '', 'Vistas guardadas…')}</select><button class="btn btn-s" ${da('catSaveView')}>${ic('plus')}Guardar vista</button><button class="btn btn-t" ${da('catReset')}>Limpiar</button></div>
+      <select class="inp" style="width:230px" data-change="catLoadView" aria-label="Vistas guardadas">${optList(views.map(v => v.name), '', 'Vistas guardadas…')}</select><button class="btn btn-s" ${da('catSaveView')}>${ic('plus')}Guardar vista</button><select class="inp" style="width:190px" data-change="catF" data-a="group" aria-label="Agrupar por">${optList([{v:'pais', l:'País'}, {v:'dominio', l:'Dominio'}, {v:'tipo', l:'Tipología'}, {v:'origen', l:'Origen'}, {v:'owner', l:'Owner'}], f.group, 'Sin agrupar')}</select><button class="btn btn-t" ${da('catReset')}>Limpiar</button></div>
       <div class="filters">${sel('estado', 'Estado', ESTADOS.map(s => ({v:s, l:ESTADO_LBL[s]})), 'Todos')}
       <div class="field"><label>País</label><select class="inp inp-sm" disabled title="Sigue el selector del cabecero: no permite salir del país seleccionado"><option>${esc(viewingLabel())}</option></select></div>
       ${sel('dominio', 'Dominio', DOMINIOS, 'Todos')}${sel('tipo', 'Tipología', ['Transversal','Específico'], 'Todas')}${sel('origen', 'Origen', ['Interno','Tercero'], 'Todos')}${sel('owner', 'Owner', uniq(AGENTS.map(a => a.owner)).sort(), 'Todos')}${sel('crit', 'Criticidad', ['Alta','Media','Baja'], 'Todas')}
-      ${sel('attr', 'Atributo', Object.entries(CAT_ATTR).map(([v, l]) => ({v, l})), 'Cualquiera')}${sel('group', 'Agrupar por', [{v:'pais', l:'País'}, {v:'dominio', l:'Dominio'}, {v:'tipo', l:'Tipología'}, {v:'origen', l:'Origen'}, {v:'owner', l:'Owner'}], 'Sin agrupar')}</div></div>
+      ${sel('attr', 'Atributo', Object.entries(CAT_ATTR).map(([v, l]) => ({v, l})), 'Cualquiera')}</div></div>
     <div class="card flush">${bulk}<div class="tbl-wrap"><table class="tbl"><thead><tr><th style="width:36px"><input type="checkbox" aria-label="Seleccionar página" data-change="catSelAll"></th>${th('nombre', 'Agente')}${th('state', 'Estado y salud')}${th('version', 'Versión', 'num')}${th('dominio', 'Dominio · país')}${th('owner', 'Owner')}${th('tipo', 'Tipología')}${th('crit', 'Criticidad')}${th('rev', 'Última revisión', 'num')}<th class="actions">Operación</th></tr></thead>
       <tbody>${rows || `<tr><td colspan="10">${emptyBox('Ningún agente coincide', 'Prueba a quitar algún filtro o a cambiar el país del cabecero.', `<button class="btn btn-s btn-sm" ${da('catReset')}>Limpiar filtros</button>`)}</td></tr>`}</tbody></table></div>
       <div class="pager"><span class="t-sm t-muted">${plural(list.length, 'agente', 'agentes')} · página ${page} de ${pages} · filtrado y paginación en servidor (simulada)</span><div class="row"><select class="inp inp-sm" style="width:auto" data-change="catF" data-a="per" aria-label="Filas por página">${optList([{v:10, l:'10 por página'}, {v:25, l:'25 por página'}, {v:50, l:'50 por página'}], per)}</select>
